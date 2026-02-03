@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)https://wiishopchannel.net/ -->
+<html style="cursor: auto;"><head style="cursor: auto;"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" style="cursor: auto;">
+    <title style="cursor: auto;">Wii Shop Channel</title>
+    <meta name="title" content="Wii Shop Channel" style="cursor: auto;">
+    <meta name="description" content="A faithful remake of the Wii Shop Channel" style="cursor: auto;">
+    <meta content="Wii Shop Channel" property="og:title" style="cursor: auto;">
+    <meta content="A faithful remake of the Wii Shop Channel" property="og:description" style="cursor: auto;">
+    <meta content="http://wiishopchannel.net/" property="og:url" style="cursor: auto;">
+    <meta content="http://wiishopchannel.net/pwa/icon192.png" property="og:image" style="cursor: auto;">
+    <meta content="#34BEED" data-react-helmet="true" name="theme-color" style="cursor: auto;">
+    <!--<link rel="shortcut icon" href="/oss/favicon.ico" />-->
+    <link rel="icon" href="https://wiishopchannel.net/icon.gif" type="image/gif" style="cursor: auto;">
+    <link rel="manifest" href="https://wiishopchannel.net/manifest.json" style="cursor: auto;">
+    <style type="text/css" style="cursor: auto;">
+      .dot {
+      	font-family: "Wii NTLG PGothic JPN Regular";
+      	font-size: 16px;
+      	color: #8C8C8C;
+      }
+      #line01 {
+      	position:absolute;
+      	top:59px;
+      	height:10px;
+      	z-index:-5;
+      }
+      #line02 {
+      	position:absolute;
+      	top:363px;
+      	height:10px;
+      	/* //z-index:21; */
+      	z-index:-5;
+      }
+      input::placeholder {
+        font-size: 23.333333px;
+        top: 31px;
+      }
+      .load {
+        animation: rotation 1s infinite linear;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .key {
+        position: fixed;
+        font-family: "Wii NTLG PGothic JPN Regular";
+        width: 43.5px;
+        height: 35.5px;
+        transition: transform 0.05s;
+        z-index: 0;
+      }
+      .keycolor {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #FFFFFF;
+        border-radius: 6px;
+        transition: background-color 0.05s;
+      }
+      .keyimg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+      }
+      .keytext {
+        position: absolute;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        top: 1px;
+        align-items: center;
+        justify-content: center;
+      	font-size: 20px;
+      }
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+      @font-face {
+        font-family: 'Wii NTLG PGothic JPN Regular';
+        src: url(/oss/serv/font2.ttf);
+      }
+    </style>
+  </head>
+  <body style="cursor: auto;">
+    <script style="cursor: auto;">
+      if (typeof navigator.serviceWorker !== 'undefined') {
+        navigator.serviceWorker.register('pwa/sw.js')
+      }
+    </script>
+    <!--<div id="cursorfield" style="position: fixed; top: 0px; left: 0px; overflow: hidden; width: 100vw; height: 100vh; z-index: 1000;" onmouseover="cursormove(event)">-->
+    <!--<div id="cursorhider" style="position: fixed; top: 0px; left: 0px; overflow: hidden; width: 100vw; height: 100vh; z-index: 4999; opacity: 0; pointer-events: none; cursor: none;"></div>-->
+    <div id="verybackbg" style="position: fixed; overflow: hidden; top: 0px; left: 0px; width: 100vw; height: 100vh; z-index: -9999; background-color: rgb(255, 255, 255); cursor: auto;"></div>
+    <canvas id="mariocanvas" style="position: fixed; top: 0px; left: 0px; z-index: -5; image-rendering: pixelated; cursor: auto;" width="1920" height="953"></canvas>
+    <div id="cursorfield" style="position: fixed; top: 0px; left: 0px; overflow: hidden; width: 100vw; height: 100vh; z-index: -999; cursor: auto;"></div>
+    <img id="cursor" style="position: fixed; overflow: hidden; z-index: 1001; pointer-events: none; transform-origin: 17px 2px; display: none; transform: scale(1.39327) rotate(0deg); cursor: auto;" src="./Wii Shop Channel_files/cursor.png">
+    <div id="fadescreen" style="position: fixed; top: 0px; left: 0px; overflow: hidden; width: 100vw; height: 100vh; z-index: -1002; opacity: 0; background: rgb(0, 0, 0); cursor: auto;"></div>
+    
+    <div id="keyboard" style="position: fixed; margin: 0px; width: 608px; height: 456px; z-index: -1000; opacity: -0.5; top: 883.833px; transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, z-index; transform: scale(2.78655, 2.08991); left: 656px; cursor: auto;">
+    
+      <input id="keyprompt" autocomplete="off" type="text" style="position: fixed; font-family: &quot;Wii NTLG PGothic JPN Regular&quot;; font-size: 30.7px; left: 20px; top: 16px; width: 539px; height: 43px; border: 7px double rgb(109, 211, 227); border-radius: 13px; outline: none; color: rgb(41, 99, 190); padding-bottom: 42px; padding-left: 6px; transform: scale(0.75, 1); cursor: auto;">
+      
+      <!--<img style="width: 608px; height: 456px; z-index: -10;" src="reference 4x3.png"/>-->
+      
+      <div id="Escape" class="key" style="left: 21px; top: 388px; width: 172px; height: 54px; cursor: auto;" onmouseenter="javascript:hoverconfirm(this);" onmouseleave="javascript:unhoverconfirm(this);" onmousedown="javascript:exit();">
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard confirm.png" style="opacity: 1; cursor: auto;">
+        <b class="keytext" style="font-size: 25px; cursor: auto;">Quit</b>
+      </div>
+      
+      <div id="Enter" class="key" style="left: 418px; top: 388px; width: 172px; height: 54px; cursor: auto;" onmouseenter="javascript:hoverconfirm(this);" onmouseleave="javascript:unhoverconfirm(this);" onmousedown="javascript:confirm();">
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard confirm.png" style="opacity: 1; cursor: auto;">
+        <b class="keytext" style="font-size: 25px; cursor: auto;">OK</b>
+      </div>
+      
+      <div id="Backspace" class="key" style="left: 506.5px; top: 160px; width: 72px; height: 33.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="background-color: rgb(184, 236, 255); cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard long button.png" style="cursor: auto;">
+        <img class="keytext" src="./Wii Shop Channel_files/keyboard back.png" style="top: 0px; cursor: auto;">
+      </div>
+      
+      <div id="CapsLock" class="key" style="left: 26.5px; top: 232px; width: 85.5px; height: 32px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="background-color: rgb(184, 236, 255); cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard long button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">Caps</b>
+      </div>
+      
+      <div id="ShiftLeft" class="key" style="left: 26.5px; top: 268px; width: 95.5px; height: 32px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="background-color: rgb(184, 236, 255); cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard long button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">Shift</b>
+      </div>
+      
+      <div id="Space" class="key" style="left: 245.5px; top: 302.5px; width: 159px; height: 33px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="background-color: rgb(184, 236, 255); cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard longer button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">Space</b>
+      </div>
+      
+      <div id="Digit1" class="key" style="left: 26px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">1</b>
+      </div>
+      
+      <div id="Digit2" class="key" style="left: 69.5px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">2</b>
+      </div>
+      
+      <div id="Digit3" class="key" style="left: 113px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">3</b>
+      </div>
+      
+      <div id="Digit4" class="key" style="left: 156.5px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">4</b>
+      </div>
+      
+      <div id="Digit5" class="key" style="left: 200px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">5</b>
+      </div>
+      
+      <div id="Digit6" class="key" style="left: 243.5px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">6</b>
+      </div>
+      
+      <div id="Digit7" class="key" style="left: 287px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">7</b>
+      </div>
+      
+      <div id="Digit8" class="key" style="left: 330.5px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">8</b>
+      </div>
+      
+      <div id="Digit9" class="key" style="left: 374px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">9</b>
+      </div>
+      
+      <div id="Digit0" class="key" style="left: 417.5px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">0</b>
+      </div>
+      
+      <div id="Minus" class="key" style="left: 461px; top: 159px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">-</b>
+      </div>
+      
+      <div id="KeyQ" class="key" style="left: 47.5px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">q</b>
+      </div>
+      
+      <div id="KeyW" class="key" style="left: 91px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">w</b>
+      </div>
+      
+      <div id="KeyE" class="key" style="left: 134.5px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">e</b>
+      </div>
+      
+      <div id="KeyR" class="key" style="left: 178px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">r</b>
+      </div>
+      
+      <div id="KeyT" class="key" style="left: 221.5px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">t</b>
+      </div>
+      
+      <div id="KeyY" class="key" style="left: 265px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">y</b>
+      </div>
+      
+      <div id="KeyU" class="key" style="left: 308.5px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">u</b>
+      </div>
+      
+      <div id="KeyI" class="key" style="left: 352px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">i</b>
+      </div>
+      
+      <div id="KeyO" class="key" style="left: 395.5px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">o</b>
+      </div>
+      
+      <div id="KeyP" class="key" style="left: 439px; top: 194.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">p</b>
+      </div>
+      
+      <div id="KeyA" class="key" style="left: 114px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">a</b>
+      </div>
+      
+      <div id="KeyS" class="key" style="left: 157.5px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">s</b>
+      </div>
+      
+      <div id="KeyD" class="key" style="left: 201px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">d</b>
+      </div>
+      
+      <div id="KeyF" class="key" style="left: 244.5px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">f</b>
+      </div>
+      
+      <div id="KeyG" class="key" style="left: 288px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">g</b>
+      </div>
+      
+      <div id="KeyH" class="key" style="left: 331.5px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">h</b>
+      </div>
+      
+      <div id="KeyJ" class="key" style="left: 375px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">j</b>
+      </div>
+      
+      <div id="KeyK" class="key" style="left: 418.5px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">k</b>
+      </div>
+      
+      <div id="KeyL" class="key" style="left: 462px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">l</b>
+      </div>
+      
+      <div id="Semicolon" class="key" style="left: 505.5px; top: 230px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">:</b>
+      </div>
+      
+      <div id="KeyZ" class="key" style="left: 124px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">z</b>
+      </div>
+      
+      <div id="KeyX" class="key" style="left: 167.5px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">x</b>
+      </div>
+      
+      <div id="KeyC" class="key" style="left: 211px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">c</b>
+      </div>
+      
+      <div id="KeyV" class="key" style="left: 254.5px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">v</b>
+      </div>
+      
+      <div id="KeyB" class="key" style="left: 298px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">b</b>
+      </div>
+      
+      <div id="KeyN" class="key" style="left: 341.5px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">n</b>
+      </div>
+      
+      <div id="KeyM" class="key" style="left: 385px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">m</b>
+      </div>
+      
+      <div id="Comma" class="key" style="left: 428.5px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">,</b>
+      </div>
+      
+      <div id="Period" class="key" style="left: 472px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">.</b>
+      </div>
+      
+      <div id="Equal" class="key" style="left: 515.5px; top: 265.5px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">=</b>
+      </div>
+      
+      <div id="BracketLeft" class="key" style="left: 156.5px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">[</b>
+      </div>
+      
+      <div id="BracketRight" class="key" style="left: 200px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">]</b>
+      </div>
+      
+      <div id="Quote" class="key" style="left: 406.5px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">'</b>
+      </div>
+      
+      <div id="BackQuote" class="key" style="left: 450px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">`</b>
+      </div>
+      
+      <div id="Slash" class="key" style="left: 493.5px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">/</b>
+      </div>
+      
+      <div id="AtSymbol" class="key" style="left: 537px; top: 301px; cursor: auto;" onmouseenter="javascript:hoverkey(this);" onmouseleave="javascript:unhoverkey(this);" onmousedown="javascript:downkey(this);" onmouseup="javascript:upkey(this);">
+        <div class="keycolor" style="cursor: auto;"></div>
+        <img class="keyimg" src="./Wii Shop Channel_files/keyboard button.png" style="cursor: auto;">
+        <b class="keytext" style="cursor: auto;">@</b>
+      </div>
+      
+    </div>
+    
+    <img id="keygradient1" style="position: fixed; margin: 0px; left: 0px; top: 725px; width: 100vw; height: 456px; z-index: -997; opacity: -0.5; transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, z-index; transform: scale(1, 2.08991); cursor: auto;" src="./Wii Shop Channel_files/keyboard gradient 1.png">
+    <div id="keygbg1" style="position: fixed; margin: 0px; left: 0px; top: 1429.5px; width: 100vw; height: 50vh; z-index: -996; opacity: -0.5; transition: opacity 0.5s ease-in-out, z-index; background-color: rgb(12, 131, 188); cursor: auto;"></div>
+    <img id="keygradient2" style="position: fixed; margin: 0px; left: 0px; top: 169.083px; width: 100vw; height: 456px; z-index: -999; opacity: -0.5; transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, z-index; transform: scale(1, 2.08991); cursor: auto;" src="./Wii Shop Channel_files/keyboard gradient 2.png">
+    <div id="keygbg2" style="position: fixed; margin: 0px; left: 0px; top: 0px; width: 100vw; height: 0px; z-index: -998; opacity: -0.5; transition: opacity 0.5s ease-in-out, z-index; background-color: rgb(104, 120, 146); cursor: auto;"></div>
+    <img id="keybg" style="position: fixed; margin: 0px; left: 0px; top: 248.5px; width: 100vw; height: 456px; z-index: -995; opacity: -0.5; transition: opacity 0.5s ease-in-out, z-index; transform: scale(1, 2.08991); cursor: auto;" src="./Wii Shop Channel_files/keyboard background.png">
+    
+    <div class="dot" id="fps" style="position: fixed; display: none; z-index: 1003; cursor: auto;"></div>
+    
+    <img class="gradient" id="gradient1" style="position: fixed; top: 0px; left: 0px; width: 10.3704vh; height: 100vh; z-index: -10; overflow: hidden; cursor: auto;" src="./Wii Shop Channel_files/gradient.png">
+    <img class="gradient" id="gradient2" style="position: fixed; top: 0px; right: 0px; width: 10.3704vh; height: 100vh; z-index: -10; transform: rotate(180deg); overflow: hidden; cursor: auto;" src="./Wii Shop Channel_files/gradient.png">
+    
+    <div id="dots" style="position: fixed; margin: 0px; width: 608px; height: 456px; z-index: -1; transform: scale(2.08991); top: 248.5px; left: 656px; cursor: auto; display: none;">
+      <div class="dot" id="line01" style="left: 300px; cursor: auto;">････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････</div>
+      <div class="dot" id="line01" style="right: 308px; cursor: auto;">･･･････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････</div>
+      <div class="dot" id="line02" style="left: 300px; cursor: auto;">････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････</div>
+      <div class="dot" id="line02" style="right: 308px; cursor: auto;">･･･････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････････</div>
+    </div>
+    
+    <div id="app" style="position: fixed; margin: 0px; width: 608px; height: 456px; transform: scale(2.08991); top: 248.5px; left: 656px; cursor: auto;">
+      <audio id="cSE_Forcus" preload="auto" src="snd/select.mp3" style="cursor: auto;"></audio>
+      <audio id="cSE_Decide" preload="auto" src="snd/decide.mp3" style="cursor: auto;"></audio>
+      <audio id="cSE_Cancel" preload="auto" src="snd/cancel.mp3" style="cursor: auto;"></audio>
+      <audio id="cSE_Finish" preload="auto" src="snd/finish.mp3" style="cursor: auto;"></audio>
+      <div class="dot" id="note" style="position: fixed; top: 30%; font-size: 18px; width: 100%; text-align: center; justify-content: center; z-index: 3; display: none; cursor: auto;" onclick="this.style.display = &#39;none&#39;;">Click the ring to continue.</div>
+      <a id="link" style="cursor: auto;">
+        <img class="load" id="load1" style="top: 17.5px; left: 17.5px; width: 75px; height: 75px; opacity: 0.1; z-index: 3; display: none;" src="./Wii Shop Channel_files/ringshadow.png">
+        <img class="load" id="load2" style="top: 10px; left: 10px; width: 75px; height: 75px; z-index: 4; display: none;" src="./Wii Shop Channel_files/ringgray.png">
+      </a>
+      <iframe src="./Wii Shop Channel_files/index.html" height="456px" width="608px" style="position: absolute; border: none; z-index: 1; overflow: hidden; cursor: auto;" onload="finishedloading(this)" name="frame" id="frame"></iframe>
+      <iframe src="./Wii Shop Channel_files/index(1).html" height="456px" width="608px" style="position: absolute; border: none; z-index: 2; overflow: hidden; cursor: auto;" onload="finishedloading(this)" name="otherframe" id="otherframe"></iframe>
+      <script language="JavaScript" src="./Wii Shop Channel_files/sound.js.download" style="cursor: auto;"></script>
+      <script language="JavaScript" src="./Wii Shop Channel_files/main.js.download" style="cursor: auto;"></script>
+      <script>
+        function finishedloading(iframe) {
+          content_finished_loading(iframe);
+        }
+      </script>
+    </div>
+  
+</body></html>
